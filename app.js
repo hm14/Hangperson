@@ -7,7 +7,6 @@ function start() {
 }
 
 function resetGame() {
-  console.log('resetting game');
   guessesRemaining = 7;
   wordsPlayed = 0;
   wordsGuessed = 0;
@@ -136,13 +135,16 @@ function playGame() {
 }
 
 function checkGuess(guess) {
+  document.getElementById(guess).style.display = 'none';
   if (word.includes(guess)) {
     console.log('match');
     showLetters(guess);
   }
   else {
-    console.log('no match');
     guessesRemaining -= 1;
+    if (guessesRemaining === 0) {
+      showResult(0);
+    }
   }
 }
 
@@ -159,7 +161,23 @@ function showLetters(guess) {
     }
   }
   document.getElementById('word').textContent = updatedStars;
-  document.getElementById(guess).style.display = 'none';
+  if (updatedStars === word.toUpperCase()) {
+    wordsGuessed += 1;
+    showResult(1);
+  }
+}
+
+function showResult(outcome) {
+  wordsPlayed += 1;
+  if(outcome) {
+    document.getElementById('message').textContent = 'Congratulations, you won!';
+  }
+  else {
+    document.getElementById('message').textContent = 'You are all out of guesses. Better luck next time!';
+  }
+  document.getElementById('won').textContent = 'Words guessed correctly: ' + wordsGuessed;
+  document.getElementById('lost').textContent = 'Words guessed incorrectly: ' + (wordsPlayed - wordsGuessed);
+  document.getElementById('total').textContent = 'Words guessed in all: ' + wordsPlayed;
 }
 
 start();
