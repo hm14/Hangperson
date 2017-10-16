@@ -1,5 +1,5 @@
 var word, words, stars, guessesRemaining, wordsGuessed, wordsPlayed;
-words = ['hollow', 'crimson', 'yellow', 'keyboard', 'silicon', 'anagrams', 'palindrome'];
+words = ['pink', 'purple', 'gray', 'yellow', 'blue', 'green', 'red'];
 
 function start() {
   resetGame();
@@ -7,16 +7,22 @@ function start() {
 }
 
 function resetGame() {
-  guessesRemaining = 7;
   wordsPlayed = 0;
   wordsGuessed = 0;
-  word = generateWord(wordsGuessed);
-  stars = generateStars(word);
-  document.getElementById('word').textContent = stars;
+  setNextRound();
 }
 
-function generateWord(wordsGuessed) {
-  return words[wordsGuessed];
+function setNextRound() {
+  guessesRemaining = 7;
+  word = generateWord(wordsPlayed);
+  stars = generateStars(word);
+  document.getElementById('word').textContent = stars;
+  document.getElementById('next').style.display = 'none';
+  updateInputLetters('visible');
+}
+
+function generateWord(wordsPlayed) {
+  return words[wordsPlayed];
 }
 
 function generateStars(word) {
@@ -25,6 +31,13 @@ function generateStars(word) {
     stars += '*';
   }
   return stars;
+}
+
+function updateInputLetters(status) {
+  alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  for(var i=0; i<alphabet.length; i++) {
+    document.getElementById(alphabet[i]).style.visibility = status;
+  }
 }
 
 function playGame() {
@@ -135,9 +148,8 @@ function playGame() {
 }
 
 function checkGuess(guess) {
-  document.getElementById(guess).style.display = 'none';
+  document.getElementById(guess).style.visibility = 'hidden';
   if (word.includes(guess)) {
-    console.log('match');
     showLetters(guess);
   }
   else {
@@ -169,8 +181,10 @@ function showLetters(guess) {
 
 function showResult(outcome) {
   wordsPlayed += 1;
+  updateInputLetters('hidden');
   if(outcome) {
     document.getElementById('message').textContent = 'Congratulations, you won!';
+    document.body.style.backgroundColor = words[wordsPlayed-1];
   }
   else {
     document.getElementById('message').textContent = 'You are all out of guesses. Better luck next time!';
@@ -178,6 +192,21 @@ function showResult(outcome) {
   document.getElementById('won').textContent = 'Words guessed correctly: ' + wordsGuessed;
   document.getElementById('lost').textContent = 'Words guessed incorrectly: ' + (wordsPlayed - wordsGuessed);
   document.getElementById('total').textContent = 'Words guessed in all: ' + wordsPlayed;
+  showNewWord();
+}
+
+function showNewWord() {
+  if(wordsPlayed === words.length) {
+    document.getElementById('message').textContent = 'We are all out of words. Come back soon for more!';
+  }
+  else {
+    document.getElementById('next').style.display = 'block';
+    document.querySelector('.next').addEventListener('click', function() {
+      document.body.style.backgroundColor = 'white';
+      document.getElementById('message').textContent = 'Now, try this one!';
+      setNextRound();
+    });
+  }
 }
 
 start();
