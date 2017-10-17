@@ -1,5 +1,5 @@
-var word, words, stars, guessesRemaining, wordsGuessed, wordsPlayed;
-words = ['pink', 'purple', 'gray', 'yellow', 'blue', 'green', 'red'];
+var word, words, images, stars, guessesRemaining, wordsGuessed, wordsPlayed;
+words = ['aqua', 'crimson', 'silver', 'magenta', 'gold', 'coral', 'pink', 'turquoise', 'teal', 'gray', 'crimson', 'green', 'lime'];
 
 function start() {
   resetGame();
@@ -18,6 +18,7 @@ function setNextRound() {
   stars = generateStars(word);
   document.getElementById('word').textContent = stars;
   document.getElementById('next').style.display = 'none';
+  document.getElementById('guesses').textContent = 'Guesses remaining: ' + guessesRemaining;
   updateInputLetters('visible');
 }
 
@@ -158,12 +159,12 @@ function checkGuess(guess) {
       showResult(0);
     }
   }
+  document.getElementById('guesses').textContent = 'Guesses remaining: ' + guessesRemaining;
 }
 
 function showLetters(guess) {
   var stars = document.getElementById('word').textContent;
   var updatedStars = '';
-  console.log(updatedStars);
   for(var i=0; i<word.length; i++) {
     if(word[i] === guess) {
       updatedStars += guess.toUpperCase();
@@ -185,6 +186,7 @@ function showResult(outcome) {
   if(outcome) {
     document.getElementById('message').textContent = 'Congratulations, you won!';
     document.body.style.backgroundColor = words[wordsPlayed-1];
+    document.getElementById('title').style.color = words[wordsPlayed-1];
   }
   else {
     document.getElementById('message').textContent = 'You are all out of guesses. Better luck next time!';
@@ -200,9 +202,11 @@ function showNewWord() {
     document.getElementById('message').textContent = 'We are all out of words. Come back soon for more!';
   }
   else {
+    document.getElementById('guesses').textContent = 'Guesses remaining: ' + guessesRemaining;
     document.getElementById('next').style.display = 'block';
     document.querySelector('.next').addEventListener('click', function() {
       document.body.style.backgroundColor = 'white';
+      document.getElementById('title').style.color = 'white';
       document.getElementById('message').textContent = 'Now, try this one!';
       setNextRound();
     });
