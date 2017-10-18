@@ -189,7 +189,9 @@ function showResult(outcome) {
     document.getElementById('title').style.color = words[wordsPlayed-1];
   }
   else {
+    document.getElementById('word').textContent = word.toUpperCase();
     document.getElementById('message').textContent = 'You are all out of guesses. Better luck next time!';
+    document.getElementById('message').style.color = words[wordsPlayed-1];
   }
   document.getElementById('won').textContent = 'Words guessed correctly: ' + wordsGuessed;
   document.getElementById('lost').textContent = 'Words guessed incorrectly: ' + (wordsPlayed - wordsGuessed);
@@ -207,6 +209,7 @@ function showNewWord() {
     document.querySelector('.next').addEventListener('click', function() {
       document.body.style.backgroundColor = 'white';
       document.getElementById('title').style.color = 'white';
+      document.getElementById('message').style.color = '#555';
       document.getElementById('message').textContent = 'Now, try this one!';
       setNextRound();
     });
