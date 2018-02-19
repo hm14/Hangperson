@@ -1,5 +1,5 @@
 var word, words, images, stars, guessesRemaining, wordsGuessed, wordsPlayed;
-words = ['aqua', 'crimson', 'silver', 'magenta', 'gold', 'coral', 'pink', 'turquoise', 'teal', 'gray', 'crimson', 'green', 'lime'];
+words = ['purple', 'yellow', 'brown', 'aqua', 'crimson', 'red', 'silver', 'orange', 'magenta', 'gold', 'peach', 'coral', 'pink', 'turquoise', 'teal', 'gray', 'crimson', 'green', 'lime'];
 
 function start() {
   resetGame();
